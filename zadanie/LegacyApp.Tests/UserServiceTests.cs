@@ -21,4 +21,23 @@ public class UserServiceTests
         //Assert.Equal(false, result); - for older versions
         Assert.False(result);
     }
+    
+    [Fact]
+    public void AddUser_ThrowsExceptionWhenClientDoesNotExist()
+    {
+        //Arrange
+        var userService = new UserService();
+
+        //Act
+        Action action = () => { userService.AddUser(
+            "Jan",
+            "Kowalski",
+            "kowalski@kowal.com",
+            DateTime.Parse("2000-01-01"),
+            100
+        ); };
+
+        //Assert
+        Assert.Throws<ArgumentException>(action);
+    }
 }
