@@ -21,6 +21,22 @@ public class UserServiceTests
         //Assert.Equal(false, result); - for older versions
         Assert.False(result);
     }
+
+    [Fact]
+    public void AddUser_ReturnsFalseWhenMissingAtSignAndDotInEmail()
+    {
+        var userService = new UserService();
+
+        var result = userService.AddUser(
+            "Jan",
+            "Kowalski",
+            "kowalskikowalcom",
+            DateTime.Parse("2000-01-01"),
+            1
+        );
+        
+        Assert.False(result);
+    }
     
     [Fact]
     public void AddUser_ThrowsExceptionWhenClientDoesNotExist()
