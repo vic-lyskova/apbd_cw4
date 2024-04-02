@@ -55,7 +55,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public void AddUser_ReturnsTrueWhenVeryImportantClient() //TODO this
+    public void AddUser_ReturnsTrueWhenVeryImportantClient()
     {
         var userService = new UserService();
 
@@ -65,6 +65,22 @@ public class UserServiceTests
             "kowalski@kowal.com",
             DateTime.Parse("2000-01-01"),
             2
+        );
+        
+        Assert.True(result);
+    }
+    
+    [Fact]
+    public void AddUser_ReturnsTrueWhenImportantClient()
+    {
+        var userService = new UserService();
+
+        var result = userService.AddUser(
+            "Jan",
+            "Kowalski",
+            "kowalski@kowal.com",
+            DateTime.Parse("2000-01-01"),
+            3
         );
         
         Assert.True(result);
