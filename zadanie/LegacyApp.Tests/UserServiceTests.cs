@@ -34,7 +34,7 @@ public class UserServiceTests
             DateTime.Parse("2000-01-01"),
             1
         );
-        
+
         Assert.False(result);
     }
 
@@ -50,7 +50,7 @@ public class UserServiceTests
             DateTime.Parse("2010-01-01"),
             1
         );
-        
+
         Assert.False(result);
     }
 
@@ -66,10 +66,10 @@ public class UserServiceTests
             DateTime.Parse("2000-01-01"),
             2
         );
-        
+
         Assert.True(result);
     }
-    
+
     [Fact]
     public void AddUser_ReturnsTrueWhenImportantClient()
     {
@@ -82,10 +82,10 @@ public class UserServiceTests
             DateTime.Parse("2000-01-01"),
             3
         );
-        
+
         Assert.True(result);
     }
-    
+
     [Fact]
     public void AddUser_ReturnsTrueWhenNormalClient()
     {
@@ -98,10 +98,29 @@ public class UserServiceTests
             DateTime.Parse("2000-01-01"),
             1
         );
-        
+
         Assert.True(result);
     }
-    
+
+    [Fact]
+    public void AddUser_ReturnsFalseWhenNormalClientWithNoCreditLimit()
+    {
+        var userService = new UserService();
+
+        Action action = () =>
+        {
+            userService.AddUser(
+                "Jan",
+                "Andrzejewicz",
+                "kowalski@kowal.com",
+                DateTime.Parse("2000-01-01"),
+                6
+            );
+        };
+
+        Assert.Throws<ArgumentException>(action);
+    }
+
     [Fact]
     public void AddUser_ThrowsExceptionWhenClientDoesNotExist()
     {
@@ -109,13 +128,16 @@ public class UserServiceTests
         var userService = new UserService();
 
         //Act
-        Action action = () => { userService.AddUser(
-            "Jan",
-            "Kowalski",
-            "kowalski@kowal.com",
-            DateTime.Parse("2000-01-01"),
-            100
-        ); };
+        Action action = () =>
+        {
+            userService.AddUser(
+                "Jan",
+                "Kowalski",
+                "kowalski@kowal.com",
+                DateTime.Parse("2000-01-01"),
+                100
+            );
+        };
 
         //Assert
         Assert.Throws<ArgumentException>(action);
