@@ -77,7 +77,7 @@ public class UserServiceTests
 
         var result = userService.AddUser(
             "Jan",
-            "Kowalski",
+            "Smith",
             "kowalski@kowal.com",
             DateTime.Parse("2000-01-01"),
             3
@@ -106,19 +106,16 @@ public class UserServiceTests
     public void AddUser_ReturnsFalseWhenNormalClientWithNoCreditLimit()
     {
         var userService = new UserService();
+        
+        var result = userService.AddUser(
+            "Jan",
+            "Kowalski",
+            "kowalski@kowal.com",
+            DateTime.Parse("2000-01-01"),
+            1
+        );
 
-        Action action = () =>
-        {
-            userService.AddUser(
-                "Jan",
-                "Andrzejewicz",
-                "kowalski@kowal.com",
-                DateTime.Parse("2000-01-01"),
-                6
-            );
-        };
-
-        Assert.Throws<ArgumentException>(action);
+        Assert.False(result);
     }
 
     [Fact]
